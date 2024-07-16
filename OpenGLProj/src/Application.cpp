@@ -5,17 +5,24 @@
 #include <string>
 #include <sstream>
 
+#define ASSERT(x) if (!(x)) __debugbreak(); // compiler intrinsic
+#define GLCall(x) glClearError();\
+    x;\
+    ASSERT(glLogCall(#x, __FILE__, __LINE__))
+
 static void glClearError()
 {
     while (glGetError() != GL_NO_ERROR);
 }
 
-static void glCheckError()
+static bool glLogCall(const char* function, const char* file, int line)
 {
     while (GLenum error = glGetError())
     {
-        std::cout << "OPEN GL ERROR: " << error << std::endl;
+        std::cout << "OPEN GL ERROR: " << error << " " << function << " " << file << ":" << line << std::endl;
+        return false;
     }
+    return true;
 }
 
 struct ShaderProgramSource
@@ -159,9 +166,7 @@ int main(void)
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
-        glClearError();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-        glCheckError();
+        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr));
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
