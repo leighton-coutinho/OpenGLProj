@@ -13,7 +13,9 @@ void main()
 
 layout(location = 0) out vec4 color;
 
+uniform vec4 u_Color; // defines a uniform so we can set var in c++
+
 void main()
 {
-   color = vec4(0.2, 0.3, 0.8, 1.0);  // colors as floats in RGBA from 0 - 1
+   color = u_Color;  // colors as floats in RGBA from 0 - 1
 };
