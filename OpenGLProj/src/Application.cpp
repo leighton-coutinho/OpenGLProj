@@ -23,9 +23,13 @@ int main(void)
     /* Initialize the library */
     if (!glfwInit())
         return -1;
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
    
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -40,11 +44,11 @@ int main(void)
 
     {
 
-        float positions[] = {
-                                -0.5f,-0.5f, 0.0f, 0.0f,
-                                0.5f, -0.5f, 1.0f, 0.0f,
-                                0.5f, 0.5f, 1.0f, 1.0f
-                               -0.5f, 0.5f, 0.0f, 1.0f
+         float positions[] = {
+        -0.5f, -0.5f, 0.0f, 0.0f, // 0
+         0.5f, -0.5f, 1.0f, 0.0f, // 1
+         0.5f,  0.5f, 1.0f, 1.0f, // 2
+        -0.5f,  0.5f, 0.0f, 1.0f  // 3
         };
 
         unsigned int indices[] = {
@@ -52,8 +56,8 @@ int main(void)
             2, 3, 0
         };
 
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         //unsigned int vao;
         //GLCall(glGenVertexArrays(1, &vao));
         //GLCall(glBindVertexArray(vao));
@@ -81,10 +85,10 @@ int main(void)
         shader.SetUniform1i("u_Texture", 0);  // here 0 is the slot that we used for our texture
 
 
-        va.Unbind();
-        shader.Unbind();
-        vb.Unbind();
-        ib.Unbind();
+        //va.Unbind();
+        //vb.Unbind();
+        //ib.Unbind();
+        //shader.Unbind();
 
         Renderer renderer;
         float r = 0.0f;
@@ -96,11 +100,10 @@ int main(void)
             /* Render here */
             renderer.Clear();
 
-            shader.Bind();
-            shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
+            //shader.Bind();
+            //shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 
             renderer.Draw(va, ib, shader);
-            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
             if (r > 1.0f)
             {

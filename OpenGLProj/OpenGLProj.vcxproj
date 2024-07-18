@@ -156,7 +156,9 @@
     <ClInclude Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\gold-dollar.png" />
     <Image Include="..\..\..\..\Downloads\skullTexture.png" />
+    <Image Include="res\textures\gold-dollar.png" />
     <Image Include="res\textures\skullTexture.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
