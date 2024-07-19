@@ -6,9 +6,11 @@ layout(location = 1) in vec2 texCoord;
 
 out vec2 v_TexCoord;
 
+uniform mat4 u_MVP;
+
 void main()
 {
-   gl_Position = position;  // use vec4 here since gl position is a vec 4
+   gl_Position = u_MVP * position;  // use vec4 here since gl position is a vec 4
    v_TexCoord = texCoord;
 };
 
